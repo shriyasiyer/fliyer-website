@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fliyer - Private Aviation, Redefined</title>
+    <meta name="description" content="Where discerning minds find their sky. Private aviation, curated with precision for those who value time as their most precious asset.">    
+    <link rel="icon" type="image/x-icon" href="images/fliyer-favicon-light.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0A0C10;
+            --primary-text: #F5F5F5;
+            --secondary-text: #B3B3B3;
+            --accent-gold: #D4AF37;
+            --accent-aqua: #A5E6DC;
+            --border-color: rgba(179, 179, 179, 0.15);
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+            --transition-smooth: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-dark);
+            color: var(--primary-text);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+
+        h1, h2, h3, h4 { font-family: var(--font-serif); font-weight: 600; }
+        h1 { font-size: clamp(3rem, 6vw, 4.5rem); line-height: 1.2; text-shadow: 0px 2px 20px rgba(0,0,0,0.5); }
+        h2 { font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.2; }
+        h3 { font-size: 1.5rem; font-weight: 600; letter-spacing: 0.5px; color: var(--primary-text); }
+        h4 { font-family: var(--font-sans); font-weight: 600; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent-gold); }
+        p { color: var(--secondary-text); line-height: 1.8; max-width: 62ch; }
+        a { color: var(--accent-aqua); text-decoration: none; transition: var(--transition-smooth); }
+        a:hover { color: var(--primary-text); }
+
+        .btn {
+            display: inline-block; padding: 1rem 2.5rem;
+            font-family: var(--font-sans); font-size: 1rem; font-weight: 500;
+            text-decoration: none; cursor: pointer;
+            transition: var(--transition-smooth);
+            border: 1px solid var(--accent-gold);
+            background-color: var(--accent-gold); color: #000;
+        }
+        .btn:hover {
+            background-color: var(--accent-aqua); border-color: var(--accent-aqua);
+            color: var(--bg-dark); transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(165, 230, 220, 0.1);
+        }
+        .btn-secondary {
+            background: transparent;
+            border-color: var(--secondary-text);
+            color: var(--secondary-text);
+        }
+        .btn-secondary:hover {
+            background-color: var(--secondary-text);
+            border-color: var(--secondary-text);
+            color: var(--bg-dark);
+        }
+
+        /* --- Header & Navigation --- */
+        .header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 1.5rem 0; z-index: 1000;
+            transition: background-color 0.4s ease, padding 0.4s ease, border-color 0.4s ease;
+        }
+        .header.scrolled {
+            background-color: rgba(10, 12, 16, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .nav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
+        .nav-left { display: flex; align-items: center; gap: 2.5rem; }
+        .nav-logo { justify-self: center; }
+        .nav-logo img { max-height: 100px; display: block; transition: var(--transition-smooth); }
+        .header.scrolled .nav-logo img { max-height: 60px; }
+        .nav-right { display: flex; justify-content: flex-end; }
+        .desktop-nav a { color: var(--primary-text); font-size: 1rem; position: relative; }
+        .desktop-nav a::after {
+            content: ''; position: absolute; width: 0; height: 1px;
+            bottom: -5px; left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--accent-aqua);
+            transition: width 0.3s ease;
+        }
+        .desktop-nav a:hover::after, .desktop-nav a.active::after { width: 100%; }
+        .hamburger-icon { display: none; cursor: pointer; z-index: 1001; }
+        .hamburger-icon div { width: 25px; height: 2px; background-color: var(--primary-text); margin: 4px 0; transition: all 0.3s ease; }
+        
+        .mobile-nav {
+            position: fixed; top: 0; right: -100%;
+            width: 100%; height: 100%;
+            background-color: var(--bg-dark);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            transition: right 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+            z-index: 999;
+        }
+        .mobile-nav.open { right: 0; }
+        .mobile-nav a {
+            font-family: var(--font-serif); font-size: 2.5rem;
+            color: var(--primary-text); margin: 1.5rem 0;
+            opacity: 0; transform: translateY(20px);
+        }
+        .hamburger-icon.open div:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger-icon.open div:nth-child(2) { opacity: 0; }
+        .hamburger-icon.open div:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center;
+            position: relative; overflow: hidden;
+        }
+        .hero-background {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; object-fit: cover;
+            z-index: -2;
+        }
+        .hero::after {
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(ellipse at center, rgba(46, 49, 55, 0.764) 100%, transparent 90%);
+            z-index: -1;
+        }
+        .hero-content { max-width: 50%; }
+        .hero-content h1 { margin-bottom: 1.5rem; }
+        .hero-content p { font-size: 1.2rem; max-width: 45ch; margin-bottom: 2.5rem; color: var(--primary-text); text-shadow: 0 1px 10px rgba(0,0,0,0.3);}
+        .hero-actions { display: flex; gap: 1rem; }
+
+        /* --- About Us Section --- */
+        .philosophy { padding: 6rem 0; }
+        .philosophy .container {
+            display: grid; grid-template-columns: 1fr 1.2fr;
+            align-items: center; gap: 5rem;
+        }
+        .philosophy h2 { margin-bottom: 1rem; }
+        .philosophy-image-wrapper { height: 40vh; }
+        .philosophy-image { width: 100%; height: 100%; object-fit: contain; }
+        
+        /* --- Offerings Section --- */
+        .offerings { background-color: #000; padding: 10rem 0; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .service-card {
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            transition: var(--transition-smooth);
+            overflow: hidden;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-aqua);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .service-image-wrapper {
+            height: 300px;
+            overflow: hidden;
+        }
+        .service-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .service-card:hover .service-image {
+            transform: scale(1.05);
+        }
+        .service-content { padding: 2rem; }
+        .service-content h4 { margin-bottom: 1rem; }
+        .service-content p { font-size: 1rem; }
+
+        /* --- Combined CTA Section --- */
+        .contact-section {
+            padding: 10rem 0;
+            border-top: 1px solid var(--border-color);
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 5rem;
+            align-items: start;
+        }
+        .contact-column h2 { margin-bottom: 1.5rem; }
+        .contact-column p { margin-bottom: 2.5rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group input {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            color: var(--primary-text);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+        }
+        .form-group input:focus { outline: 1px solid var(--accent-aqua); }
+        
+        .direct-contact { margin-bottom: 4rem; }
+        .direct-contact-item { margin-bottom: 1.5rem; }
+        .direct-contact-item h4 { font-size: 1rem; margin-bottom: 0.25rem; }
+        .direct-contact-item a { font-size: 1.25rem; font-weight: 500; color: var(--primary-text); }
+        
+        .newsletter-form { display: flex; justify-content: center; gap: 1rem; }
+        .newsletter-form input { flex-grow: 1; }
+
+        /* --- Footer --- */
+        .footer { padding: 6rem 0 3rem 0; background-color: #000; }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+        .footer-about h3 { font-size: 2rem; margin-bottom: 1rem;}
+        .footer-col h4 { margin-bottom: 1.5rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 1rem; }
+        .footer-col ul li a { color: var(--secondary-text); }
+        .footer-col ul li a:hover { color: var(--primary-text); }
+        .footer-bottom { text-align: center; padding-top: 3rem; border-top: 1px solid var(--border-color); }
+        .footer-copy { color: var(--secondary-text); font-size: 0.9rem; font-style: italic; }
+        
+        /* --- Responsive --- */
+        @media (max-width: 992px) {
+            .nav { grid-template-columns: auto 1fr; }
+            .nav-logo { justify-self: start; }
+            .nav-left, .nav-right { display: none; }
+            .hamburger-icon { display: flex; flex-direction: column; justify-self: end; }
+            .hero-content { max-width: 100%; padding: 0 1rem;}
+            .philosophy .container { grid-template-columns: 1fr; }
+            .philosophy-image-wrapper { order: -1; margin-bottom: 3rem; height: 50vh;}
+            .services-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .contact-grid { grid-template-columns: 1fr; gap: 4rem; }
+        }
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container nav">
+            <div class="nav-left desktop-nav">
+                <a href="#philosophy">About Us</a>
+                <a href="#offerings">Our Charters</a>
+            </div>
+            <a href="#home" class="nav-logo">
+                <img src="images/fliyer-logo-light.png" alt="Fliyer Logo">
+            </a>
+            <div class="nav-right">
+                 <a href="#contact" class="btn">Request Charter</a>
+            </div>
+            <div class="hamburger-icon">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </header>
+    
+    <nav class="mobile-nav">
+        <a href="#philosophy">About Us</a>
+        <a href="#offerings">Our Charter</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <main>
+        <section class="hero" id="home">
+            <img src="images/hero-background.jpg" alt="Sleek private jet on a tarmac at dusk" class="hero-background">
+            <div class="container hero-content">
+                <h1 data-splitting>Time. Privacy. Altitude.</h1>
+                <p>Where discerning minds find their sky. Private aviation, curated with precision for those who value time as their most precious asset.</p>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn">Request Charter</a>
+                    <a href="#offerings" class="btn btn-secondary">Our Charters</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section contact-section" id="contact">
+            <div class="container contact-grid">
+                <div class="contact-column">
+                    <div class="direct-contact">
+                        <h2>Direct Contact</h2>
+                        <p>For immediate assistance, please use the details below.</p>
+                        <div class="direct-contact-item">
+                            <h4>Concierge</h4>
+                            <a href="tel:9892582000">(+91) 98925 82000</a>
+                        </div>
+                        <div class="direct-contact-item">
+                            <h4>Enquiries</h4>
+                            <a href="mailto:info@fliyer.in">info@fliyer.in</a>
+                        </div>
+                    </div>
+                    <div class="inner-circle-signup">
+                        <h2>Inner Circle</h2>
+                        <p>Receive thoughtful insights and opportunities, delivered with the same discretion we bring to every flight.</p>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Enter your email address" required>
+                            <button type="submit" class="btn">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="contact-column">
+                    <h2>Begin Your Journey</h2>
+                    <p>Share your vision, and we'll craft the path.</p>
+                     <form id="enquiry-form">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                             <input type="text" id="organization" name="organization" placeholder="Organization">
+                        </div>
+                         <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="phone" name="phone" placeholder="Contact Number" required>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%;">Send Enquiry</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="section philosophy" id="philosophy">
+            <div class="container">
+                <div class="philosophy-content">
+                    <h2>Refined by Purpose</h2>
+                    <p>Founded on principles of quiet excellence and shaped by meticulous attention to detail, we have learned that true sophistication speaks softly. We orchestrate journeys where every detail serves a single purpose: preserving the irreplaceable moments that define a life well-lived.</p>
+                </div>
+                <div class="philosophy-image-wrapper">
+                    <img src="images/philosophy-header.jpg" alt="Abstract detail of luxury aviation" class="philosophy-image">
+                </div>
+            </div>
+        </section>
+
+        <section class="section offerings" id="offerings">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Your Sky, Your Terms</h2>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-image-wrapper">
+                            <img src="images/offering-jet.jpg" alt="Private Jet" class="service-image">
+                        </div>
+                        <div class="service-content">
+                            <h4>Private Jet Charters</h4>
+                            <p>Tailored journeys across continents and conversations. Every detail considered, every preference anticipated, every moment preserved for what truly matters to you.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-image-wrapper">
+                            <img src="images/offering-helicopter.jpg" alt="Helicopter" class="service-image">
+                        </div>
+                        <div class="service-content">
+                            <h4>Helicopter Transfers</h4>
+                            <p>Urban grace redefined. Navigate cityscapes and coastlines with the quiet confidence that comes from traveling at your own rhythm and discretion.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-image-wrapper">
+                            <img src="images/offering-ambulance.jpg" alt="Air Ambulance" class="service-image">
+                        </div>
+                        <div class="service-content">
+                            <h4>Air Ambulance</h4>
+                            <p>When life demands swift, compassionate care. Medical expertise meets aviation precision, ensuring privacy and discretion in every critical moment.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h2>Fliyer</h2>
+                    <p>Where time meets sky, and privacy takes flight.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="#philosophy">About Us</a></li>
+                        <li><a href="#offerings">Our Charter</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#offerings">Private Jets</a></li>
+                        <li><a href="#offerings">Helicopters</a></li>
+                        <li><a href="#offerings">Air Ambulance</a></li>
+                    </ul>
+                </div>
+                 <div class="footer-col">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="mailto:info@fliyer.in">info@fliyer.in</a></li>
+                        <li><a href="tel:+919892582000">(+91) 98925 82000</a></li>
+                        <h5>Mumbai, Maharashtra, India</h5>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copy">&copy; 2025 Fliyer. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            gsap.registerPlugin(ScrollTrigger);
+            Splitting();
+
+            // --- Header Scroll Effect ---
+            const header = document.querySelector('.header');
+            ScrollTrigger.create({
+                start: "top top-=" + (header.offsetHeight),
+                onUpdate: self => {
+                    header.classList.toggle('scrolled', self.direction === 1 && self.scroll() > 50);
+                },
+                onLeaveBack: () => {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // --- Mobile Navigation ---
+            const hamburger = document.querySelector('.hamburger-icon');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
+            if(hamburger && mobileNav) {
+                hamburger.addEventListener('click', () => {
+                    const isOpen = hamburger.classList.toggle('open');
+                    mobileNav.classList.toggle('open');
+                    if(isOpen) {
+                        gsap.to(mobileNavLinks, {
+                            opacity: 1, y: 0, stagger: 0.08, duration: 0.5, ease: 'power3.out', delay: 0.2
+                        });
+                    } else {
+                         gsap.to(mobileNavLinks, { opacity: 0, y: 20, duration: 0.2 });
+                    }
+                });
+
+                mobileNavLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('open');
+                        mobileNav.classList.remove('open');
+                    });
+                });
+            }
+
+            // --- Active Nav Link Highlight ---
+            const sections = document.querySelectorAll('main > section[id]');
+            const navLinks = document.querySelectorAll('.desktop-nav a');
+            
+            sections.forEach(section => {
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: "top center",
+                    end: "bottom center",
+                    onToggle: self => {
+                        if (self.isActive) {
+                            const id = section.getAttribute('id');
+                            navLinks.forEach(link => {
+                                link.classList.remove('active');
+                                if (link.getAttribute('href') === `#${id}`) {
+                                    link.classList.add('active');
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+
+
+            // --- Hero Text Animation ---
+            const heroTitle = document.querySelector('.hero-content h1');
+            if (heroTitle) {
+                const chars = heroTitle.querySelectorAll('.char');
+                const tl = gsap.timeline({delay: 0.5});
+                tl.to(chars, {
+                    y: '0%',
+                    stagger: { amount: 0.4 },
+                    ease: 'power3.out',
+                    duration: 1
+                }).from(['.hero-content p', '.hero-actions'], {
+                    opacity: 0, y: 30, duration: 1, ease: 'power3.out', stagger: 0.2
+                }, "-=0.8");
+            }
+
+            // --- General Fade-in Animation ---
+            gsap.utils.toArray(".philosophy, .section-header, .process-intro, .contact-section").forEach(elem => {
+                gsap.from(elem, {
+                    scrollTrigger: { trigger: elem, start: 'top 85%', toggleActions: 'play none none none' },
+                    opacity: 0, y: 50, duration: 1.2, ease: 'power3.out'
+                });
+            });
+            
+            // --- Staggered Card Animations ---
+            gsap.utils.toArray(".service-card, .process-card").forEach((card, i) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card.parentElement,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 0,
+                    y: 50,
+                    duration: 1,
+                    delay: i * 0.15,
+                    ease: 'power3.out'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
